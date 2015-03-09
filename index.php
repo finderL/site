@@ -15,7 +15,43 @@
 <body>
 <script type="text/javascript">
 function callback(){
-  console.log('start');
+  var config = {
+    'appId': 'wx067279168c3d8bed', // 必填，公众号的唯一标识
+    'title':'finder', // 标题
+    'desc':'关于技术，关于互联网，关于自己', // 描述
+    'link':'http://www.liubeismx.cn', // 点击后连接地址
+    'img_url': 'http://www.liubeismx.cn/favicon.ico' // 分享到朋友/朋友圈的缩略图url
+
+  };
+  WeixinJSBridge.on("menuitem:share:appmessage",function() {
+    // body...
+    WeixinJSBridge.invoke('sendAppMessage',{
+      'appid': config.appid, // 公众号appID
+      'type': 'link', // 非必填，music,vido或link,默认为link。
+      'data_url': '', // 非必填，连接地址,如音乐的mp3数据地址,供内置播放器使用
+      'img_url': config.img_url, // 缩略图地址
+      'img_height':100, // 缩略图高度
+      'img_width':100, // 缩略图宽度
+      'link':config.link, // 链接地址
+      'desc':config.desc, // 描述
+      'title':config.title // 标题
+    },function(res){
+        //alert(res.err_msg);
+    });
+  });
+  WeixinJSBridge.on("menuitem:share:appmessage",function(){
+    WeixinJSBridge.invoke('shareTimeline',{
+      'appid': config.appid, // 公众号appID
+      'title':config.title, // 分享标题
+      'desc':config.desc, // 描述
+      'link':config.link, // 点击后连接地址
+      'img_width':100, // 图片宽度
+      'img_height':100, // 图片高度
+      'img_url': config.img_url // 分享到朋友圈的缩略图url
+    },function(res){
+        //alert(res.err_msg);
+    });
+  });
 }
 if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {
     callback();
@@ -27,43 +63,7 @@ if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "functi
         document.attachEvent("onWeixinJSBridgeReady", callback);
     }
 }
-var config = {
-  'appId': 'wx067279168c3d8bed', // 必填，公众号的唯一标识
-  'title':'finder', // 标题
-  'desc':'关于技术，关于互联网，关于自己', // 描述
-  'link':'http://www.liubeismx.cn', // 点击后连接地址
-  'img_url': 'http://www.liubeismx.cn/favicon.ico' // 分享到朋友/朋友圈的缩略图url
 
-};
-WeixinJSBridge.on("menuitem:share:appmessage",function() {
-  // body...
-  WeixinJSBridge.invoke('sendAppMessage',{
-    'appid': config.appid, // 公众号appID
-    'type': 'link', // 非必填，music,vido或link,默认为link。
-    'data_url': '', // 非必填，连接地址,如音乐的mp3数据地址,供内置播放器使用
-    'img_url': config.img_url, // 缩略图地址
-    'img_height':100, // 缩略图高度
-    'img_width':100, // 缩略图宽度
-    'link':config.link, // 链接地址
-    'desc':config.desc, // 描述
-    'title':config.title // 标题
-  },function(res){
-      //alert(res.err_msg);
-  });
-});
-WeixinJSBridge.on("menuitem:share:appmessage",function(){
-  WeixinJSBridge.invoke('shareTimeline',{
-    'appid': config.appid, // 公众号appID
-    'title':config.title, // 分享标题
-    'desc':config.desc, // 描述
-    'link':config.link, // 点击后连接地址
-    'img_width':100, // 图片宽度
-    'img_height':100, // 图片高度
-    'img_url': config.img_url // 分享到朋友圈的缩略图url
-  },function(res){
-      //alert(res.err_msg);
-  });
-});
 
 </script>
 </body>
